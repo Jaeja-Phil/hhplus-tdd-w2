@@ -10,6 +10,17 @@ data class Lesson(
     val lessonDate: LocalDateTime,
     val enrollCount: Int
 ) {
+    companion object {
+        fun newOf(name: String, description: String, lessonDate: LocalDateTime): Lesson {
+            return Lesson(
+                id = null,
+                name = name,
+                description = description,
+                lessonDate = lessonDate,
+                enrollCount = 0
+            )
+        }
+    }
     fun toEntity(): LessonEntity {
         return LessonEntity(
             id = id,
