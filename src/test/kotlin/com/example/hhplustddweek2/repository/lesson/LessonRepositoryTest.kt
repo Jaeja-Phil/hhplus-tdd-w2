@@ -20,6 +20,12 @@ class LessonRepositoryTest {
     @InjectMocks
     private lateinit var lessonRepository: LessonRepository
 
+    private fun createLessonEntities(desiredCount: Int): List<LessonEntity> {
+        return (1..desiredCount).map {
+            LessonEntity(id = it.toLong(), name = "Lesson $it", description = "Description $it", lessonDate = LocalDateTime.now(), enrollCount = 0)
+        }
+    }
+
     @BeforeEach
     fun setUp() {
         MockitoAnnotations.openMocks(this)
@@ -28,10 +34,7 @@ class LessonRepositoryTest {
     @Test
     fun `findAll - should return all lessons`() {
         // given
-        val lessonEntities = listOf(
-            LessonEntity(id = 1L, name = "Lesson 1", description = "Description 1", lessonDate = LocalDateTime.now(), enrollCount = 0),
-            LessonEntity(id = 2L, name = "Lesson 2", description = "Description 2", lessonDate = LocalDateTime.now(), enrollCount = 0)
-        )
+        val lessonEntities = createLessonEntities(2)
 
         // when
         `when`(lessonJpaRepository.findAll()).thenReturn(lessonEntities)
@@ -46,7 +49,7 @@ class LessonRepositoryTest {
     @Test
     fun `findById - should return lesson by id`() {
         // given
-        val lessonEntity = LessonEntity(id = 1L, name = "Lesson 1", description = "Description 1", lessonDate = LocalDateTime.now(), enrollCount = 0)
+        val lessonEntity = createLessonEntities(1).first()
 
         // when
         `when`(lessonJpaRepository.findById(1L)).thenReturn(Optional.of(lessonEntity))
@@ -70,7 +73,8 @@ class LessonRepositoryTest {
     @Test
     fun `create - should create lesson`() {
         // given
-        val lesson = Lesson(id = null, name = "Lesson 1", description = "Description 1", lessonDate = LocalDateTime.now(), enrollCount = 0)
+        val lesson = Lesson(id = null, // null id means new lesson
+            name = "Lesson 1", description = "Description 1", lessonDate = LocalDateTime.now(), enrollCount = 0)
 
         // when
         `when`(lessonJpaRepository.save(lesson.toEntity()))

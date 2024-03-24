@@ -1,6 +1,7 @@
 package com.example.hhplustddweek2.repository.lesson
 
 import com.example.hhplustddweek2.domain.Lesson
+import com.example.hhplustddweek2.entity.LessonEntity
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -16,6 +17,14 @@ class LessonRepository(
     }
 
     fun create(lesson: Lesson): Lesson {
-        return lessonJpaRepository.save(lesson.toEntity()).toDomain()
+        return lessonJpaRepository.save(
+            LessonEntity(
+                id = null,
+                name = lesson.name,
+                description = lesson.description,
+                lessonDate = lesson.lessonDate,
+                enrollCount = 0
+            )
+        ).toDomain()
     }
 }
