@@ -17,6 +17,18 @@ class LessonEnrollmentRepository(
         return lessonEnrollmentJpaRepository.findById(id).orElse(null)?.toDomain()
     }
 
+    fun findAllByUserId(userId: Long): List<LessonEnrollment> {
+        return lessonEnrollmentJpaRepository.findAllByUserId(userId).map { it.toDomain() }
+    }
+
+    fun findAllByLessonId(lessonId: Long): List<LessonEnrollment> {
+        return lessonEnrollmentJpaRepository.findAllByLessonId(lessonId).map { it.toDomain() }
+    }
+
+    fun findByUserIdAndLessonId(userId: Long, lessonId: Long): LessonEnrollment? {
+        return lessonEnrollmentJpaRepository.findByUserIdAndLessonId(userId, lessonId)?.toDomain()
+    }
+
     fun create(lessonEnrollment: LessonEnrollment): LessonEnrollment {
         return lessonEnrollmentJpaRepository.save(
             LessonEnrollmentEntity(
