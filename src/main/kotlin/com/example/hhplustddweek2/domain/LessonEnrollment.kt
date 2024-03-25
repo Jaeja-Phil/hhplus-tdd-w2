@@ -17,4 +17,15 @@ data class LessonEnrollment(
             status = status
         )
     }
+
+    companion object {
+        fun newOf(lesson: Lesson, userId: Long): LessonEnrollment {
+            return LessonEnrollment(
+                id = null,
+                lesson = lesson,
+                userId = userId,
+                status = LessonEnrollmentStatusType.ENROLL
+            )
+        }
+    }
 }
