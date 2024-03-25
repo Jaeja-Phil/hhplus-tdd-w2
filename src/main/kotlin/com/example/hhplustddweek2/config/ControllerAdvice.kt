@@ -1,5 +1,7 @@
 package com.example.hhplustddweek2.config
 
+import com.example.hhplustddweek2.error.ConflictException
+import com.example.hhplustddweek2.error.MaxEnrollCountException
 import com.example.hhplustddweek2.error.NotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,6 +17,22 @@ class ControllerAdvice {
         return ResponseEntity(
             ErrorResponse("404", e.message ?: "Not found"),
             HttpStatus.NOT_FOUND
+        )
+    }
+
+    @ExceptionHandler(ConflictException::class)
+    fun handleConflictException(e: ConflictException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity(
+            ErrorResponse("409", e.message ?: "Conflict"),
+            HttpStatus.CONFLICT
+        )
+    }
+
+    @ExceptionHandler(MaxEnrollCountException::class)
+    fun handleMaxEnrollCountException(e: MaxEnrollCountException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity(
+            ErrorResponse("400", e.message ?: "Max enroll count"),
+            HttpStatus.BAD_REQUEST
         )
     }
 
