@@ -5,6 +5,7 @@ import com.example.hhplustddweek2.error.MaxEnrollCountException
 import com.example.hhplustddweek2.error.NotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import java.lang.Exception
@@ -41,6 +42,14 @@ class ControllerAdvice {
         return ResponseEntity(
             ErrorResponse("500", "Internal server error"),
             HttpStatus.INTERNAL_SERVER_ERROR
+        )
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException::class)
+    fun handleMissingServletRequestParameterException(e: MissingServletRequestParameterException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity(
+            ErrorResponse("400", e.message ?: "Bad request"),
+            HttpStatus.BAD_REQUEST
         )
     }
 }
