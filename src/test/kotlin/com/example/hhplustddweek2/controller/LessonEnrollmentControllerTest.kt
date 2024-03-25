@@ -58,4 +58,21 @@ class LessonEnrollmentControllerTest {
             .andExpect(status().isOk)
             .andExpect(jsonPath("\$").value(true))
     }
+
+    @Test
+    fun `checkEnrollment - 수강신청이 되어있지 않으면 false를 반환한다`() {
+        // given
+        val userId = 1L
+        val lesson = lessonRepository.create(
+            Lesson.newOf("name", "description", LocalDateTime.now())
+        )
+
+        // when & then
+        mockMvc.perform(get("/lesson-enrollments/check")
+            .param("lessonId", lesson.id.toString())
+            .param("userId", userId.toString())
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("\$").value(false))
+    }
 }
