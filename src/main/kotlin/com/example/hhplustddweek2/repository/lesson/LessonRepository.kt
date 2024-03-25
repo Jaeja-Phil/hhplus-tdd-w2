@@ -16,6 +16,10 @@ class LessonRepository(
         return lessonJpaRepository.findById(id).orElse(null)?.toDomain()
     }
 
+    fun findLessonByIdWithLock(id: Long): Lesson? {
+        return lessonJpaRepository.findLessonByIdWithLock(id).orElse(null)?.toDomain()
+    }
+
     fun create(lesson: Lesson): Lesson {
         return lessonJpaRepository.save(
             LessonEntity(

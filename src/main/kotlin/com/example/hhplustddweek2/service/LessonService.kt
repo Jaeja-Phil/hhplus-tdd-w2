@@ -12,8 +12,11 @@ class LessonService(
 ) {
     fun getAllLessons() = lessonRepository.findAll()
 
-    fun getLessonById(id: Long): Lesson {
-        return lessonRepository.findById(id) ?: throw NotFoundException("Lesson not found")
+    fun getLessonById(id: Long, withLock: Boolean = false): Lesson {
+        return when (withLock) {
+            true -> lessonRepository.findLessonByIdWithLock(id) ?: throw NotFoundException("Lesson not found")
+            false -> lessonRepository.findById(id) ?: throw NotFoundException("Lesson not found")
+        }
     }
 
     fun createLesson(lessonCreateRequest: LessonCreateRequest): Lesson {
