@@ -26,7 +26,7 @@ class LessonEnrollmentService(
         return lessonEnrollmentRepository.create(LessonEnrollment.newOf(lesson, userId))
     }
 
-    fun checkEnrollment(lessonId: Long, userId: Long): Boolean {
-        return lessonEnrollmentRepository.findByUserIdAndLessonId(userId, lessonId) != null
+    fun checkEnrollment(lessonId: Long, userId: Long): LessonEnrollment {
+        return lessonEnrollmentRepository.findByUserIdAndLessonId(userId, lessonId) ?: throw NotFoundException("Lesson not found")
     }
 }

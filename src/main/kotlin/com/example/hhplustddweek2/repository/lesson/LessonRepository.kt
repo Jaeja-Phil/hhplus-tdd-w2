@@ -31,4 +31,16 @@ class LessonRepository(
             )
         ).toDomain()
     }
+
+    fun update(lesson: Lesson): Lesson {
+        return lessonJpaRepository.save(
+            LessonEntity(
+                id = lesson.id ?: throw IllegalArgumentException("id should not be null"),
+                name = lesson.name,
+                description = lesson.description,
+                lessonDate = lesson.lessonDate,
+                enrollCount = lesson.enrollCount
+            )
+        ).toDomain()
+    }
 }

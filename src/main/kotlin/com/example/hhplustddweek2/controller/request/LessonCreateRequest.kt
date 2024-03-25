@@ -7,3 +7,8 @@ data class LessonCreateRequest(
     val description: String,
     val lessonDate: LocalDateTime
 )
+
+/**
+ * example json:
+
+ */

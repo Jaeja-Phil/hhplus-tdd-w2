@@ -24,4 +24,8 @@ class LessonService(
             Lesson.newOf(lessonCreateRequest.name, lessonCreateRequest.description, lessonCreateRequest.lessonDate)
         )
     }
+
+    fun incrementEnrollCount(lesson: Lesson): Lesson {
+        return lessonRepository.update(lesson.copy(enrollCount = lesson.enrollCount + 1))
+    }
 }
