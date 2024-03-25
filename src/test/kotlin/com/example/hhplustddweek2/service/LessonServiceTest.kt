@@ -2,11 +2,13 @@ package com.example.hhplustddweek2.service
 
 import com.example.hhplustddweek2.controller.request.LessonCreateRequest
 import com.example.hhplustddweek2.domain.Lesson
+import com.example.hhplustddweek2.error.NotFoundException
 import com.example.hhplustddweek2.repository.lesson.LessonRepository
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.time.LocalDateTime
 
 class LessonServiceTest {
@@ -44,6 +46,18 @@ class LessonServiceTest {
         assertEquals("name", lesson.name)
         assertEquals("description", lesson.description)
         assertEquals(0, lesson.enrollCount)
+    }
+
+    @Test
+    fun `getLessonById - 존재하지 않는 id로 Lesson을 가져오려고 하면 NotFoundException이 발생한다`() {
+        // given
+        every { lessonRepository.findById(1L) } returns null
+
+        // when & then
+        val exception = assertThrows<NotFoundException> {
+            lessonService.getLessonById(1L)
+        }
+        assertEquals("Lesson not found", exception.message)
     }
 
     @Test
