@@ -32,4 +32,26 @@ class LessonEnrollmentTest {
         assertEquals(lessonEnrollment.userId, lessonEnrollmentEntity.userId)
         assertEquals(lessonEnrollment.status, lessonEnrollmentEntity.status)
     }
+
+    @Test
+    fun `newOf - lesson과 userId를 받아 id가 null인 LessonEnrollment을 생성하는지`() {
+        // given
+        val lesson = Lesson(
+            id = 1L,
+            name = "name",
+            description = "description",
+            lessonDate = LocalDateTime.now(),
+            enrollCount = 0
+        )
+        val userId = 1L
+
+        // when
+        val lessonEnrollment = LessonEnrollment.newOf(lesson, userId)
+
+        // then
+        assertNull(lessonEnrollment.id)
+        assertEquals(lesson, lessonEnrollment.lesson)
+        assertEquals(userId, lessonEnrollment.userId)
+        assertEquals(LessonEnrollmentStatusType.ENROLL, lessonEnrollment.status)
+    }
 }
