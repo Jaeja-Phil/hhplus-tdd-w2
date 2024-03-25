@@ -8,6 +8,7 @@ enum class LessonEnrollmentStatusType {
 }
 
 @Entity
+@Table(name = "lesson_enrollments")
 data class LessonEnrollmentEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

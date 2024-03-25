@@ -5,9 +5,11 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.Table
 import java.time.LocalDateTime
 
 @Entity
+@Table(name = "lessons")
 data class LessonEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // since we are using postgres, it will use the sequence
