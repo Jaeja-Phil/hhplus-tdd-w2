@@ -19,8 +19,7 @@ class EnrollLessonApplication(
             throw MaxEnrollCountException("Lesson has reached max enroll count")
         }
 
-        lessonService.incrementEnrollCount(lesson)
-        // FIXME: updated enrollCount is not being reflected in the response
-        return lessonEnrollmentService.enroll(lesson, userId)
+        val updatedLesson = lessonService.incrementEnrollCount(lesson)
+        return lessonEnrollmentService.enroll(updatedLesson, userId)
     }
 }
